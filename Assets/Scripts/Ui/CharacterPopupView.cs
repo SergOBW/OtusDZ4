@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Lessons.Architecture.PM;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using CharacterInfo = Lessons.Architecture.PM.CharacterInfo;
+using VContainer.Unity;
 
-public class CharacterPopup : MonoBehaviour
+public class CharacterPopupView : MonoBehaviour, IInitializable
 {
+    public event Action OnMainButtonClickedEvent;
+    public event Action OnExitButtonClickedEvent;
+    
     [Header("User Info")]
     [SerializeField] private TMP_Text userNameText; 
     [SerializeField] private TMP_Text userDescriptionText; 
@@ -28,65 +30,24 @@ public class CharacterPopup : MonoBehaviour
     [SerializeField] private Button closeButton;
 
     private List<GameObject> _spawnedStats = new List<GameObject>();
-
-    private CharacterInfo _characterInfo;
-    private PlayerLevel _playerLevel;
-    private UserInfo _userInfo;
+    
+    public void Initialize()
+    {
+        Hide();
+    }
 
     #region Show / Hide
 
-    public void Show(UserInfo userInfo, PlayerLevel playerLevel, CharacterInfo characterInfo)
+    public void Show()
     {
-        _userInfo = userInfo;
-        _playerLevel = playerLevel;
-        _characterInfo = characterInfo;
-    
-        _userInfo.OnValueChanged += HandleUserInfoChanged;
-        _playerLevel.OnValueChanged += HandlePlayerLevelChanged;
-        _characterInfo.OnValueChanged += HandleCharacterInfoChanged;
-        
         mainButton.onClick.AddListener(OnMainButtonClicked);
         closeButton.onClick.AddListener(OnCloseButtonClicked);
         
-        HandleUserInfoChanged();
-        HandlePlayerLevelChanged();
-        HandleCharacterInfoChanged();
-        
         gameObject.SetActive(true);
     }
-
-    private void HandleCharacterInfoChanged()
-    {
-        DrawCharacterStats(_characterInfo.GetStats());
-    }
-
-    private void HandlePlayerLevelChanged()
-    {
-        DrawPlayerLevel(_playerLevel);
-    }
-
-    private void HandleUserInfoChanged()
-    {
-        DrawUserInfo(_userInfo);
-    }
-
+    
     public void Hide()
     {
-        if (_userInfo != null)
-        {
-            _userInfo.OnValueChanged -= HandleUserInfoChanged;
-        }
-
-        if (_playerLevel != null)
-        {
-            _playerLevel.OnValueChanged -= HandlePlayerLevelChanged;
-        }
-
-        if (_characterInfo != null)
-        {
-            _characterInfo.OnValueChanged -= HandleCharacterInfoChanged;
-        }
-        
         mainButton.onClick.RemoveListener(OnMainButtonClicked);
         closeButton.onClick.RemoveListener(OnCloseButtonClicked);
         
@@ -95,7 +56,7 @@ public class CharacterPopup : MonoBehaviour
 
     #endregion
 
-    private void DrawPlayerLevel(PlayerLevel playerLevel)
+    public void DrawPlayerLevel(PlayerLevel playerLevel)
     {
         playerCurrentLevelText.text = $"Level : {playerLevel.CurrentLevel}";
         playerExperienceText.text = $"XP : {playerLevel.CurrentExperience} / {playerLevel.RequiredExperience}";
@@ -112,7 +73,7 @@ public class CharacterPopup : MonoBehaviour
         else  mainButton.interactable = false;
     }
     
-    private void DrawCharacterStats(CharacterStat[] characterStats)
+    public void DrawCharacterStats(CharacterStat[] characterStats)
     {
         foreach (var oldStat in _spawnedStats)
         {
@@ -136,7 +97,7 @@ public class CharacterPopup : MonoBehaviour
         }
     }
 
-    private void DrawUserInfo(UserInfo userInfo)
+    public void DrawUserInfo(UserInfo userInfo)
     {
         userNameText.text = userInfo.Name;
         userDescriptionText.text = userInfo.Description;
@@ -145,12 +106,12 @@ public class CharacterPopup : MonoBehaviour
 
     private void OnMainButtonClicked()
     {
-        _playerLevel.LevelUp();
+        OnMainButtonClickedEvent?.Invoke();
     }
-
-
+    
     private void OnCloseButtonClicked()
     {
-        Hide();
+        OnExitButtonClickedEvent?.Invoke();
     }
+    
 }

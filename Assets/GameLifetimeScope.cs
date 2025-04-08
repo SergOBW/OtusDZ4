@@ -11,7 +11,7 @@ public class GameLifetimeScope : LifetimeScope
     private List<PlayerLevel> _playerLevels = new List<PlayerLevel>();
     private List<CharacterInfo> _characterInfos = new List<CharacterInfo>();
     
-    [SerializeField] private CharacterPopup characterPopup;
+    [SerializeField] private CharacterPopupView characterPopupView;
     protected override void Configure(IContainerBuilder builder)
     {
         foreach (UserInfoSo userInfoSo in Resources.LoadAll<UserInfoSo>("UserInfos"))
@@ -38,8 +38,9 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_userInfos).As<IReadOnlyList<UserInfo>>();
         builder.RegisterInstance(_playerLevels).As<IReadOnlyList<PlayerLevel>>();
         builder.RegisterInstance(_characterInfos).As<IReadOnlyList<CharacterInfo>>();
+        
+        builder.RegisterInstance(characterPopupView).AsImplementedInterfaces().AsSelf();
 
-        characterPopup.Hide();
-        builder.RegisterInstance(characterPopup).AsSelf();
+        builder.Register<CharacterPopupObserver>(Lifetime.Scoped).AsSelf();
     }
 }

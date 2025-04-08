@@ -11,39 +11,46 @@ public interface IChangable
     public event Action OnValueChanged;
 }
 
-public class PopupManager : MonoBehaviour
+public class DzHelper : MonoBehaviour
 {
-    [Inject]
-    private CharacterPopup characterPopup;
-    [Inject]
-    private List<UserInfo> UserInfos { get; set; }
-    [Inject]
-    private List<PlayerLevel> PlayerLevels { get; set; }
-    [Inject]
-    private List<CharacterInfo> CharacterInfos { get; set; }
+    private CharacterPopupObserver _characterPopupObserver;
+    
+    private List<UserInfo> _userInfos;
+    private List<PlayerLevel> _playerLevels;
+    private List<CharacterInfo> _characterInfos;
 
-    private UserInfo _currentUserInfo => UserInfos[_currentUserIndex];
-    private PlayerLevel _currentPlayerLevel => PlayerLevels[_currentUserIndex];
-    private CharacterInfo _currentCharacterInfo => CharacterInfos[_currentUserIndex];
+    private UserInfo _currentUserInfo => _userInfos[_currentUserIndex];
+    private PlayerLevel _currentPlayerLevel => _playerLevels[_currentUserIndex];
+    private CharacterInfo _currentCharacterInfo => _characterInfos[_currentUserIndex];
     
     private int _currentUserIndex;
+
+    [Inject]
+    public void Construct(CharacterPopupObserver characterPopupObserver, List<UserInfo> userInfos, List<PlayerLevel> playerLevels, List<CharacterInfo> characterInfos)
+    {
+        _characterPopupObserver = characterPopupObserver;
+        _userInfos = userInfos;
+        _playerLevels = playerLevels;
+        _characterInfos = characterInfos;
+    }
 
     [Button]
     public void ShowPopup()
     {
-        characterPopup.Show(_currentUserInfo,_currentPlayerLevel, _currentCharacterInfo);
+        _characterPopupObserver.SetData(_currentCharacterInfo, _currentPlayerLevel, _currentUserInfo);
+        _characterPopupObserver.ShowPopup();
     }
     
     [Button]
     private void HidePopup()
     {
-        characterPopup.Hide();
+        _characterPopupObserver.HidePopup();
     }
     
     [Button]
     public void NextUser()
     {
-        if (_currentUserIndex + 1 >= UserInfos.Count)
+        if (_currentUserIndex + 1 >= _userInfos.Count)
         {
             _currentUserIndex = 0;
         }
@@ -58,7 +65,7 @@ public class PopupManager : MonoBehaviour
     {
         if (_currentUserIndex - 1 < 0)
         {
-            _currentUserIndex = UserInfos.Count - 1;
+            _currentUserIndex = _userInfos.Count - 1;
         }
         else _currentUserIndex--;
 

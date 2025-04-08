@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 135614906}
   - component: {fileID: 135614907}
   m_Layer: 5
-  m_Name: PopupManager
+  m_Name: DzHelper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,12 +417,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135614905}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 540, y: 960, z: 0}
+  m_LocalScale: {x: 0.5405405, y: 0.5405405, z: 0.5405405}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1653010315}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &135614907
 MonoBehaviour:
@@ -1741,7 +1741,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 135614905}
-  characterPopup: {fileID: 2060308497}
+  characterPopupView: {fileID: 2060308497}
 --- !u!1 &1333860703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2469,7 +2469,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 135614906}
   - {fileID: 1581796190}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3300,3 +3299,4 @@ SceneRoots:
   - {fileID: 1653010315}
   - {fileID: 417357781}
   - {fileID: 1296332820}
+  - {fileID: 135614906}
