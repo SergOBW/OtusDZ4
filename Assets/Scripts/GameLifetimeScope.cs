@@ -41,6 +41,7 @@ public class GameLifetimeScope : LifetimeScope
         
         builder.RegisterInstance(characterPopupView).AsImplementedInterfaces().AsSelf();
 
-        builder.Register<CharacterPopupObserver>(Lifetime.Scoped).AsSelf();
+        builder.Register<CharacterPopupObserver>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
+        builder.Register<DescriptionObserver>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
     }
 }

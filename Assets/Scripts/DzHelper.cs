@@ -8,7 +8,7 @@ using CharacterInfo = Lessons.Architecture.PM.CharacterInfo;
 
 public interface IChangable
 {
-    public event Action OnValueChanged;
+    public event Action OnValueChangedEvent;
 }
 
 public class DzHelper : MonoBehaviour

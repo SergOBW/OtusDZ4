@@ -4,7 +4,7 @@ namespace Lessons.Architecture.PM
 {
     public sealed class PlayerLevel : IChangable
     {
-        public event Action OnValueChanged;
+        public event Action OnValueChangedEvent;
         
         public int CurrentLevel { get; private set; } = 1;
         public int CurrentExperience { get; private set; }
@@ -31,7 +31,7 @@ namespace Lessons.Architecture.PM
             var xp = Math.Min(CurrentExperience + range, RequiredExperience);
             CurrentExperience = xp;
             SaveData();
-            OnValueChanged?.Invoke();
+            OnValueChangedEvent?.Invoke();
         }
         
         public void LevelUp()
@@ -41,7 +41,7 @@ namespace Lessons.Architecture.PM
                 CurrentExperience = 0;
                 CurrentLevel++;
                 SaveData();
-                OnValueChanged?.Invoke();
+                OnValueChangedEvent?.Invoke();
             }
         }
 

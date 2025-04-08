@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Lessons.Architecture.PM
 {
     public sealed class CharacterInfo : IChangable
     {
-        public event Action OnValueChanged;
+        public event Action OnValueChangedEvent;
         
         private HashSet<CharacterStat> _stats = new HashSet<CharacterStat>();
 
@@ -59,7 +58,7 @@ namespace Lessons.Architecture.PM
             if (_stats.Add(stat))
             {
                 SaveData();
-                OnValueChanged?.Invoke();
+                OnValueChangedEvent?.Invoke();
             }
         }
         
@@ -67,7 +66,7 @@ namespace Lessons.Architecture.PM
         {
             if (_stats.Remove(stat))
             {
-                OnValueChanged?.Invoke();
+                OnValueChangedEvent?.Invoke();
             }
         }
         
@@ -79,7 +78,7 @@ namespace Lessons.Architecture.PM
                 {
                     _stats.Remove(characterStat);
                     SaveData();
-                    OnValueChanged?.Invoke();
+                    OnValueChangedEvent?.Invoke();
                     break;
                 }
             }

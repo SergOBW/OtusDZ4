@@ -11,7 +11,7 @@ namespace Lessons.Architecture.PM
             Value = statValue;
         }
         
-        public event Action OnValueChanged;
+        public event Action OnValueChangedEvent;
         
         public string Name { get; private set; }
         
@@ -20,7 +20,7 @@ namespace Lessons.Architecture.PM
         public void ChangeValue(int value)
         {
             Value = value;
-            OnValueChanged?.Invoke();
+            OnValueChangedEvent?.Invoke();
         }
     }
 }

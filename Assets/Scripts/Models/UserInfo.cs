@@ -5,7 +5,7 @@ namespace Lessons.Architecture.PM
 {
     public sealed class UserInfo : IChangable
     {
-        public event Action OnValueChanged;
+        public event Action OnValueChangedEvent;
         
         public string Name { get; private set; }
         public string Description { get; private set; }
@@ -32,21 +32,21 @@ namespace Lessons.Architecture.PM
         public void ChangeName(string name)
         {
             Name = name;
-            OnValueChanged?.Invoke();
+            OnValueChangedEvent?.Invoke();
             SaveData();
         }
         
         public void ChangeDescription(string description)
         {
             Description = description;
-            OnValueChanged?.Invoke();
+            OnValueChangedEvent?.Invoke();
             SaveData();
         }
         
         public void ChangeIcon(Sprite icon)
         {
             Icon = icon;
-            OnValueChanged?.Invoke();
+            OnValueChangedEvent?.Invoke();
             SaveData();
         }
         
