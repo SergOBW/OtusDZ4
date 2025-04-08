@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1793,6 +1793,10 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 135614905}
   characterPopupView: {fileID: 2060308497}
+  characterInfoView: {fileID: 1991850783}
+  playerLevelView: {fileID: 1624998443}
+  descriptionView: {fileID: 960943862}
+  characterStatView: {fileID: 1600929296}
 --- !u!1 &1333860703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,7 +2262,7 @@ GameObject:
   - component: {fileID: 1600929295}
   - component: {fileID: 1600929296}
   m_Layer: 5
-  m_Name: Stat
+  m_Name: CharacterStatView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2305,8 +2309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a628fd4be64edaa8c6b9c37ba4f91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statNameText: {fileID: 1613090799}
-  statValueText: {fileID: 0}
+  statText: {fileID: 1613090799}
 --- !u!1 &1613090797
 GameObject:
   m_ObjectHideFlags: 0
@@ -2937,7 +2940,7 @@ GameObject:
   - component: {fileID: 1991850782}
   - component: {fileID: 1991850783}
   m_Layer: 5
-  m_Name: CharacterStatsView
+  m_Name: CharacterInfoView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2975,7 +2978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterStatsGrid: {fileID: 13570972}
-  characterStatView: {fileID: 0}
+  characterStatView: {fileID: 1600929296}
 --- !u!1 &2046973875
 GameObject:
   m_ObjectHideFlags: 0
@@ -3219,11 +3222,11 @@ RectTransform:
   - {fileID: 1002888449}
   - {fileID: 1496042290}
   - {fileID: 1333860704}
-  - {fileID: 13570972}
   - {fileID: 360456917}
   - {fileID: 960943861}
   - {fileID: 1624998442}
   - {fileID: 1991850782}
+  - {fileID: 13570972}
   m_Father: {fileID: 1581796190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

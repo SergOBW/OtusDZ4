@@ -12,6 +12,11 @@ public class GameLifetimeScope : LifetimeScope
     private List<CharacterInfo> _characterInfos = new List<CharacterInfo>();
     
     [SerializeField] private CharacterPopupView characterPopupView;
+    
+    [SerializeField] private CharacterInfoView characterInfoView;
+    [SerializeField] private PlayerLevelView playerLevelView;
+    [SerializeField] private DescriptionView descriptionView;
+    [SerializeField] private CharacterStatView characterStatView;
     protected override void Configure(IContainerBuilder builder)
     {
         foreach (UserInfoSo userInfoSo in Resources.LoadAll<UserInfoSo>("UserInfos"))
@@ -39,9 +44,24 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_playerLevels).As<IReadOnlyList<PlayerLevel>>();
         builder.RegisterInstance(_characterInfos).As<IReadOnlyList<CharacterInfo>>();
         
+        // Views
+        builder.RegisterInstance(characterStatView).AsSelf();
+        builder.Register<CharacterStatFactory>(Lifetime.Scoped).AsSelf();
+        
+        builder.RegisterInstance(characterInfoView).AsImplementedInterfaces().AsSelf();
+        builder.RegisterInstance(playerLevelView).AsImplementedInterfaces().AsSelf();
+        builder.RegisterInstance(descriptionView).AsImplementedInterfaces().AsSelf();
+        
+        // At last
         builder.RegisterInstance(characterPopupView).AsImplementedInterfaces().AsSelf();
 
-        builder.Register<CharacterPopupObserver>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
+        // Observers
         builder.Register<DescriptionObserver>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
+        builder.Register<CharacterInfoObserver>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
+        builder.Register<PlayerLevelObserver>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
+        builder.Register<CharacterStatObserver>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
+        
+        // At last
+        builder.Register<CharacterPopupObserver>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
     }
 }

@@ -9,20 +9,19 @@ public class CharacterInfoView : MonoBehaviour
     
     private List<CharacterStatView> _spawnedStats = new List<CharacterStatView>();
     
-    public void UpdateCharacterInfo(int stastAmount)
+    public void SpawnCharacterStats(List<CharacterStatView> characterStatViews)
     {
         foreach (var oldStat in _spawnedStats)
         {
-            DestroyImmediate(oldStat);
+            DestroyImmediate(oldStat.gameObject);
         }
         
-        _spawnedStats = new List<CharacterStatView>();
+        _spawnedStats = new List<CharacterStatView>(characterStatViews);
 
-        for (int i = 0; i < stastAmount; i++)
+        foreach (var characterStatView in _spawnedStats)
         {
-            CharacterStatView characterStatUiItem = Instantiate(characterStatView, characterStatsGrid);
-            characterStatUiItem.gameObject.SetActive(true);
-            _spawnedStats.Add(characterStatUiItem);
+            characterStatView.transform.SetParent(characterStatsGrid, false);
+            characterStatView.gameObject.SetActive(true);
         }
     }
 }

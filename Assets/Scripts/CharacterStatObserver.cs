@@ -1,13 +1,14 @@
 ﻿using System;
 using Lessons.Architecture.PM;
+using UnityEngine;
 using VContainer;
+using Object = System.Object;
 
 public class CharacterStatObserver : IDisposable
 {
     private CharacterStatView _characterStatView;
     private CharacterStat _characterStat;
-
-    [Inject]
+    
     public void Construct(CharacterStatView characterStatView)
     {
         _characterStatView = characterStatView;
@@ -23,12 +24,12 @@ public class CharacterStatObserver : IDisposable
         _characterStat = characterStat;
         
         _characterStat.OnValueChangedEvent += CharacterStatOnValueChanged;
+        CharacterStatOnValueChanged();
     }
 
     private void CharacterStatOnValueChanged()
     {
-        _characterStatView.UpdateName(_characterStat.Name);
-        _characterStatView.UpdateValue(_characterStat.Value);
+        _characterStatView.UpdateText($"{_characterStat.Name} : {_characterStat.Value}");
     }
 
     public void Dispose()

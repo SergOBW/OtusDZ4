@@ -25,6 +25,7 @@ public class PlayerLevelObserver : IDisposable
         _playerLevel = playerLevel;
         
         _playerLevel.OnValueChangedEvent += PlayerLevelOnValueChanged;
+        PlayerLevelOnValueChanged();
     }
     
     private void PlayerLevelViewOnLevelUpButtonClicked()
@@ -34,9 +35,10 @@ public class PlayerLevelObserver : IDisposable
     
     private void PlayerLevelOnValueChanged()
     {
-        _playerLevelView.UpdateCurrentExperience(_playerLevel.CurrentExperience);
+        _playerLevelView.UpdateCurrentExperience(_playerLevel.RequiredExperience,_playerLevel.CurrentExperience);
         _playerLevelView.UpdateCurrentLevel(_playerLevel.CurrentLevel);
         _playerLevelView.UpdateSliderValues(_playerLevel.RequiredExperience, _playerLevel.CurrentExperience);
+        _playerLevelView.UpdateButtonState(_playerLevel.CanLevelUp());
     }
     
     public void Dispose()

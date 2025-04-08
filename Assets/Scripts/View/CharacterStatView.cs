@@ -3,16 +3,11 @@ using UnityEngine;
 
 public class CharacterStatView : MonoBehaviour
 {
-    [SerializeField] private TMP_Text statNameText;
-    [SerializeField] private TMP_Text statValueText;
-
-    public void UpdateName(string newName)
+    [SerializeField] private TMP_Text statText;
+    
+    public void UpdateText(string newName)
     {
-        statNameText.text = newName;
+        statText.text = newName;
     }
-
-    public void UpdateValue(int newValue)
-    {
-        statNameText.text = newValue.ToString();
-    }
+    
 }

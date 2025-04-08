@@ -4,16 +4,28 @@ using VContainer;
 
 public class CharacterPopupObserver : IDisposable
 {
+    [Inject]
     private CharacterPopupView _characterPopupView;
+    [Inject]
+    private CharacterInfoView _characterInfoView;
+    [Inject]
+    private PlayerLevelView _playerLevelView;
+    [Inject]
+    private DescriptionView _descriptionView;
     
-    private CharacterInfo _characterInfo;
+    [Inject]
+    private CharacterInfoObserver _characterInfoObserver;
+    [Inject]
+    private PlayerLevelObserver _playerLevelObserver;
+    [Inject]
+    private DescriptionObserver _descriptionObserver;
     
     [Inject]
     public void Construct(CharacterPopupView characterPopupView)
     {
         _characterPopupView = characterPopupView;
         
-        _characterPopupView.OnExitButtonClickedEvent += CharacterPopupViewOnExitButtonClicked;
+        _characterPopupView.OnExitButtonClickedEvent += OnExitButtonClicked;
     }
     
     public void ShowPopup()
@@ -28,16 +40,18 @@ public class CharacterPopupObserver : IDisposable
     
     public void SetData(CharacterInfo newCharacterInfo, PlayerLevel newPlayerLevel, UserInfo newUserInfo)
     {
-
+        _characterInfoObserver.SetData(newCharacterInfo);
+        _playerLevelObserver.SetData(newPlayerLevel);
+        _descriptionObserver.SetData(newUserInfo);
     }
 
-    private void CharacterPopupViewOnExitButtonClicked()
+    private void OnExitButtonClicked()
     {
-        
+        HidePopup();
     }
     
     public void Dispose()
     {
-        _characterPopupView.OnExitButtonClickedEvent -= CharacterPopupViewOnExitButtonClicked;
+        _characterPopupView.OnExitButtonClickedEvent -= OnExitButtonClicked;
     }
 }

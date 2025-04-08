@@ -39,9 +39,9 @@ public class PlayerLevelView : MonoBehaviour
         playerCurrentLevelText.text = currentLevel.ToString();
     }
 
-    public void UpdateCurrentExperience(int currentExperience)
+    public void UpdateCurrentExperience(int requiredExperience, int currentExperience)
     {
-        playerExperienceText.text = currentExperience.ToString();
+        playerExperienceText.text = $"XP: {currentExperience} / {requiredExperience}";
     }
 
     public void UpdateSliderValues(int requiredExperience, int currentExperience)
@@ -50,5 +50,10 @@ public class PlayerLevelView : MonoBehaviour
         playerExperienceSlider.maxValue = requiredExperience;
 
         playerExperienceSlider.value = currentExperience;
+    }
+
+    public void UpdateButtonState(bool canLevelUp)
+    {
+        levelUpButton.interactable = canLevelUp;
     }
 }
